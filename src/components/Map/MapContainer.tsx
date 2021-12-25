@@ -4,6 +4,8 @@ import { Map } from './Map';
 import { Marker } from './Marker';
 
 export const MapContainer = () => {
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.REACT_APP_GOOGLE_API_KEY);
   const render = (status: Status) => {
     return <h1>{status}</h1>;
   };
@@ -16,9 +18,6 @@ export const MapContainer = () => {
   const [locations, setLocations] = React.useState<google.maps.LatLngLiteral[]>([]);
 
   const onClick = (e: google.maps.MapMouseEvent) => {
-    // avoid directly mutating state
-    console.log(e.latLng?.lat());
-    console.log(e.latLng?.lng());
     setClicks([...clicks, e.latLng!]);
   };
 
@@ -48,7 +47,7 @@ export const MapContainer = () => {
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
-      <Wrapper apiKey={"AIzaSyCpuQGuswqIsj_-bkUYsGcZF_nHjB6cGr8"} render={render}>
+      <Wrapper apiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`} render={render}>
         <Map
           center={center}
           onClick={onClick}
